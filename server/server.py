@@ -41,6 +41,18 @@ def send_to_chunkr(file):
       return task_result["output"]
     time.sleep(1)
 
+def chunks_to_sections(chunks):
+  text_list = []
+  current_text = ""
+  for chunk in chunks:
+    for segment in chunk["segments"]:
+      if segment['segment_type'] == "text":
+        current_text += segment["content"]
+      if segment['segment_type'] == "Section header":
+        text_list.append(current_text)
+        text_list.append(segment["content"])
+        current_text = ""
+  return text_list
 
 if __name__ == "__main__":
   app.run(debug=True)
