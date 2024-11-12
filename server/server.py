@@ -1,3 +1,5 @@
+from openai import OpenAI
+from pathlib import Path
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -10,6 +12,7 @@ load_dotenv()
 CHUNKR_URL = 'https://api.chunkr.ai/api/v1/task'
 CHUNKR_KEY = os.getenv("CHUNKR_KEY")
 CHUNK_SIZE = 1500
+OPENAI_KEY = 2187
 headers = {
   "Authorization": CHUNKR_KEY,
 }
@@ -52,6 +55,20 @@ def chunks_to_sections(chunks):
         text_list.append(segment["content"])
         current_text = ""
   return text_list
+
+client = OpenAI(OPENAI_KEY)
+def getMP3(text_list):
+  MP3 = []
+  for text in text_list:
+    speech_file_path = Path(__file__).parent / "speech.mp3"
+    response = client.audio.speech.create(
+      "model": "tts-1",
+      "voice": "alloy",
+      "input": text
+    )
+    response.stream_to_file(speech_file_path)
+    MP3.append(speech_file_path)
+  return MP3
 
 if __name__ == "__main__":
   app.run(debug=True)
