@@ -18,7 +18,7 @@ const HomePage: React.FC = () => {
     onDrop,
     accept: { 'application/pdf': ['.pdf'] },
   });
-
+9
   // Function to upload PDF to the Flask server
   const uploadPdf = async (file: File) => {
     const formData = new FormData();
