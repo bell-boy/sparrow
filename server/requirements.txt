@@ -1,0 +1,8 @@
+blinker==1.9.0
+click==8.1.7
+Flask==3.0.3
+itsdangerous==2.2.0
+Jinja2==3.1.4
+MarkupSafe==3.0.2
+-e git+ssh://git@github.com/bell-boy/sparrow.git@6d101eff55ba47c804a85f32e487a6c4c0191462#egg=src&subdirectory=server
+Werkzeug==3.1.3
